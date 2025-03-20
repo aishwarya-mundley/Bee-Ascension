@@ -1,7 +1,7 @@
 // Bee Game Level 1: "Gathering Nectar" - Three.js Implementation with Mobile Support
 
 // Import necessary libraries
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@latest/examples/jsm/controls/OrbitControls.js";
 
 // Game class
 class BeeGame {
