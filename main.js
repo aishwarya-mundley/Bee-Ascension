@@ -1,7 +1,6 @@
 // Bee Game Level 1: "Gathering Nectar" - Three.js Implementation with Mobile Support
 
 // Import necessary libraries
-import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 // Game class
@@ -19,15 +18,15 @@ class BeeGame {
     };
 
     // Setup scene
-    this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0x87CEEB); // Sky blue background
+    this.scene = new window.THREE.Scene();
+    this.scene.background = new window.THREE.Color(0x87CEEB); // Sky blue background
     
     // Setup camera
-    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    this.camera = new window.THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.camera.position.set(0, 10, 20);
     
     // Setup renderer
-    this.renderer = new THREE.WebGLRenderer({ antialias: true });
+    this.renderer = new window.THREE.WebGLRenderer({ antialias: true });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.shadowMap.enabled = true;
     document.body.appendChild(this.renderer.domElement);
@@ -62,7 +61,7 @@ class BeeGame {
     window.addEventListener('resize', () => this.onWindowResize(), false);
     
     // Animation loop
-    this.clock = new THREE.Clock();
+    this.clock = new window.THREE.Clock();
     this.animate();
   }
   
@@ -237,11 +236,11 @@ class BeeGame {
   
   setupLighting() {
     // Ambient light
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    const ambientLight = new window.THREE.AmbientLight(0xffffff, 0.5);
     this.scene.add(ambientLight);
     
     // Directional light (sun)
-    const sunLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    const sunLight = new window.THREE.DirectionalLight(0xffffff, 0.8);
     sunLight.position.set(50, 100, 50);
     sunLight.castShadow = true;
     sunLight.shadow.mapSize.width = 2048;
@@ -257,13 +256,13 @@ class BeeGame {
   
   createWorld() {
     // Ground plane
-    const groundGeometry = new THREE.PlaneGeometry(100, 100);
-    const groundMaterial = new THREE.MeshStandardMaterial({ 
+    const groundGeometry = new window.THREE.PlaneGeometry(100, 100);
+    const groundMaterial = new window.THREE.MeshStandardMaterial({ 
       color: 0x7CFC00,
       roughness: 0.8,
       metalness: 0.2
     });
-    const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+    const ground = new window.THREE.Mesh(groundGeometry, groundMaterial);
     ground.rotation.x = -Math.PI / 2;
     ground.receiveShadow = true;
     this.scene.add(ground);
@@ -280,13 +279,13 @@ class BeeGame {
   }
   
   createHill(x, height, z, rotation) {
-    const hillGeometry = new THREE.ConeGeometry(10, height, 16);
-    const hillMaterial = new THREE.MeshStandardMaterial({ 
+    const hillGeometry = new window.THREE.ConeGeometry(10, height, 16);
+    const hillMaterial = new window.THREE.MeshStandardMaterial({ 
       color: 0x4CAF50,
       roughness: 0.9,
       metalness: 0.1
     });
-    const hill = new THREE.Mesh(hillGeometry, hillMaterial);
+    const hill = new window.THREE.Mesh(hillGeometry, hillMaterial);
     hill.position.set(x, height / 2, z);
     hill.rotation.y = rotation;
     hill.castShadow = true;
@@ -295,29 +294,29 @@ class BeeGame {
   }
   
   createTree(x, y, z, scale) {
-    const trunkGeometry = new THREE.CylinderGeometry(0.5, 0.7, 2, 8);
-    const trunkMaterial = new THREE.MeshStandardMaterial({ 
+    const trunkGeometry = new window.THREE.CylinderGeometry(0.5, 0.7, 2, 8);
+    const trunkMaterial = new window.THREE.MeshStandardMaterial({ 
       color: 0x8B4513,
       roughness: 0.9,
       metalness: 0.1
     });
-    const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
+    const trunk = new window.THREE.Mesh(trunkGeometry, trunkMaterial);
     trunk.position.set(x, y + 1, z);
     trunk.castShadow = true;
     trunk.receiveShadow = true;
     
-    const leavesGeometry = new THREE.ConeGeometry(2, 4, 8);
-    const leavesMaterial = new THREE.MeshStandardMaterial({ 
+    const leavesGeometry = new window.THREE.ConeGeometry(2, 4, 8);
+    const leavesMaterial = new window.THREE.MeshStandardMaterial({ 
       color: 0x228B22,
       roughness: 0.8,
       metalness: 0.1
     });
-    const leaves = new THREE.Mesh(leavesGeometry, leavesMaterial);
+    const leaves = new window.THREE.Mesh(leavesGeometry, leavesMaterial);
     leaves.position.set(0, 3, 0);
     leaves.castShadow = true;
     leaves.receiveShadow = true;
     
-    const tree = new THREE.Group();
+    const tree = new window.THREE.Group();
     tree.add(trunk);
     tree.add(leaves);
     tree.scale.set(scale, scale, scale);
@@ -328,15 +327,15 @@ class BeeGame {
   
   createBee() {
     // Create bee body
-    const bodyGeometry = new THREE.SphereGeometry(0.5, 16, 16);
-    const bodyMaterial = new THREE.MeshStandardMaterial({ 
+    const bodyGeometry = new window.THREE.SphereGeometry(0.5, 16, 16);
+    const bodyMaterial = new window.THREE.MeshStandardMaterial({ 
       color: 0xFFD700, // Gold color
       roughness: 0.4,
       metalness: 0.3
     });
     
     // Create black stripes material using shader
-    const stripeMaterial = new THREE.MeshStandardMaterial({ 
+    const stripeMaterial = new window.THREE.MeshStandardMaterial({ 
       color: 0x000000, // Black color
       roughness: 0.4,
       metalness: 0.3,
@@ -345,63 +344,63 @@ class BeeGame {
     });
     
     // Create bee body
-    const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+    const body = new window.THREE.Mesh(bodyGeometry, bodyMaterial);
     
     // Create black stripes
-    const stripe1 = new THREE.Mesh(
-      new THREE.TorusGeometry(0.5, 0.1, 16, 32, Math.PI / 2),
+    const stripe1 = new window.THREE.Mesh(
+      new window.THREE.TorusGeometry(0.5, 0.1, 16, 32, Math.PI / 2),
       stripeMaterial
     );
     stripe1.rotation.x = Math.PI / 2;
     stripe1.position.z = -0.15;
     
-    const stripe2 = new THREE.Mesh(
-      new THREE.TorusGeometry(0.5, 0.1, 16, 32, Math.PI / 2),
+    const stripe2 = new window.THREE.Mesh(
+      new window.THREE.TorusGeometry(0.5, 0.1, 16, 32, Math.PI / 2),
       stripeMaterial
     );
     stripe2.rotation.x = Math.PI / 2;
     stripe2.position.z = 0.15;
     
     // Create wings
-    const wingGeometry = new THREE.CircleGeometry(0.4, 16);
-    const wingMaterial = new THREE.MeshStandardMaterial({ 
+    const wingGeometry = new window.THREE.CircleGeometry(0.4, 16);
+    const wingMaterial = new window.THREE.MeshStandardMaterial({ 
       color: 0xFFFFFF,
       transparent: true,
       opacity: 0.4,
-      side: THREE.DoubleSide
+      side: window.THREE.DoubleSide
     });
     
-    const leftWing = new THREE.Mesh(wingGeometry, wingMaterial);
+    const leftWing = new window.THREE.Mesh(wingGeometry, wingMaterial);
     leftWing.position.set(-0.5, 0.3, 0);
     leftWing.rotation.z = Math.PI / 4;
     
-    const rightWing = new THREE.Mesh(wingGeometry, wingMaterial);
+    const rightWing = new window.THREE.Mesh(wingGeometry, wingMaterial);
     rightWing.position.set(0.5, 0.3, 0);
     rightWing.rotation.z = -Math.PI / 4;
     
     // Create stinger
-    const stingerGeometry = new THREE.ConeGeometry(0.1, 0.3, 16);
-    const stingerMaterial = new THREE.MeshStandardMaterial({ 
+    const stingerGeometry = new window.THREE.ConeGeometry(0.1, 0.3, 16);
+    const stingerMaterial = new window.THREE.MeshStandardMaterial({ 
       color: 0x000000 
     });
-    const stinger = new THREE.Mesh(stingerGeometry, stingerMaterial);
+    const stinger = new window.THREE.Mesh(stingerGeometry, stingerMaterial);
     stinger.position.set(0, 0, -0.65);
     stinger.rotation.x = Math.PI / 2;
     
     // Create eyes
-    const eyeGeometry = new THREE.SphereGeometry(0.1, 16, 16);
-    const eyeMaterial = new THREE.MeshStandardMaterial({ 
+    const eyeGeometry = new window.THREE.SphereGeometry(0.1, 16, 16);
+    const eyeMaterial = new window.THREE.MeshStandardMaterial({ 
       color: 0x000000 
     });
     
-    const leftEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
+    const leftEye = new window.THREE.Mesh(eyeGeometry, eyeMaterial);
     leftEye.position.set(-0.2, 0.2, 0.4);
     
-    const rightEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
+    const rightEye = new window.THREE.Mesh(eyeGeometry, eyeMaterial);
     rightEye.position.set(0.2, 0.2, 0.4);
     
     // Create bee group
-    this.bee = new THREE.Group();
+    this.bee = new window.THREE.Group();
     this.bee.add(body);
     this.bee.add(stripe1);
     this.bee.add(stripe2);
@@ -421,7 +420,7 @@ class BeeGame {
     // Bee movement properties
     this.beeSpeed = 0.15;
     this.beeRotationSpeed = 0.05;
-    this.beeDirection = new THREE.Vector3(0, 0, 1);
+    this.beeDirection = new window.THREE.Vector3(0, 0, 1);
     
     // Wing animation
     this.wingAnimation = { 
@@ -455,27 +454,27 @@ class BeeGame {
   
   createFlower(color, x, z) {
     // Create flower group
-    const flower = new THREE.Group();
+    const flower = new window.THREE.Group();
     
     // Create stem
-    const stemGeometry = new THREE.CylinderGeometry(0.05, 0.05, 1, 8);
-    const stemMaterial = new THREE.MeshStandardMaterial({ 
+    const stemGeometry = new window.THREE.CylinderGeometry(0.05, 0.05, 1, 8);
+    const stemMaterial = new window.THREE.MeshStandardMaterial({ 
       color: 0x00FF00 
     });
-    const stem = new THREE.Mesh(stemGeometry, stemMaterial);
+    const stem = new window.THREE.Mesh(stemGeometry, stemMaterial);
     stem.position.y = 0.5;
     flower.add(stem);
     
     // Create petals
     const petalCount = 6;
-    const petalGeometry = new THREE.CircleGeometry(0.3, 8);
-    const petalMaterial = new THREE.MeshStandardMaterial({ 
+    const petalGeometry = new window.THREE.CircleGeometry(0.3, 8);
+    const petalMaterial = new window.THREE.MeshStandardMaterial({ 
       color: color,
-      side: THREE.DoubleSide
+      side: window.THREE.DoubleSide
     });
     
     for (let i = 0; i < petalCount; i++) {
-      const petal = new THREE.Mesh(petalGeometry, petalMaterial);
+      const petal = new window.THREE.Mesh(petalGeometry, petalMaterial);
       const angle = (i / petalCount) * Math.PI * 2;
       petal.position.set(
         Math.cos(angle) * 0.2,
@@ -489,11 +488,11 @@ class BeeGame {
     }
     
     // Create center
-    const centerGeometry = new THREE.SphereGeometry(0.2, 16, 16);
-    const centerMaterial = new THREE.MeshStandardMaterial({ 
+    const centerGeometry = new window.THREE.SphereGeometry(0.2, 16, 16);
+    const centerMaterial = new window.THREE.MeshStandardMaterial({ 
       color: 0xFFFF00 
     });
-    const center = new THREE.Mesh(centerGeometry, centerMaterial);
+    const center = new window.THREE.Mesh(centerGeometry, centerMaterial);
     center.position.y = 1.1;
     flower.add(center);
     
@@ -669,7 +668,7 @@ class BeeGame {
     
     // Reset bee position
     this.bee.position.set(0, 2, 0);
-    this.beeDirection = new THREE.Vector3(0, 0, 1);
+    this.beeDirection = new window.THREE.Vector3(0, 0, 1);
     this.bee.rotation.y = 0;
     
     // Reset flowers

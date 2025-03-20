@@ -7,6 +7,10 @@
   <style>
     body { margin: 0; overflow: hidden; }
   </style>
+  <script type="module">
+    import * as THREE from "https://cdn.jsdelivr.net/npm/three@latest/build/three.module.js";
+    window.THREE = THREE; // Make it globally accessible
+  </script>  
 </head>
 <body>
   <script type="module" src="./main.js"></script>
